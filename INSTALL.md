@@ -1,112 +1,83 @@
 # Installing Agent Thor
 
-Clone the framework once globally, then symlink it into any iOS project you work on. The AI tool discovers skills within your project scope via symlinks.
+Agent Thor is installed by copying its skill directories into a skills directory supported by your coding agent. Let the agent choose the correct destination for its own conventions.
 
 ## Prerequisites
 
 - Git
+- An AI coding agent that supports Agent Skills
 
 ## Installation
 
-### Step 1: Clone the repository (once)
+### Recommended: ask your agent
+
+Give this prompt to the coding agent where you want to use Agent Thor:
+
+> Install the Agent Thor skills from https://github.com/thienhm/agent-thor. Copy every directory under `skills/` into the appropriate skills directory for this agent. Use a user-level skills directory unless I ask for a project-only installation. Preserve each skill directory and all of its referenced files. Do not replace or symlink my `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, or other project instruction files. Verify that the `using-agent-thor` skill is discoverable when finished.
+
+The agent should:
+
+1. Obtain the latest Agent Thor repository contents by cloning, downloading, or using an existing checkout.
+2. Choose a supported user-level skills directory by default, or a project-level directory when requested.
+3. Copy every directory under Agent Thor's `skills/` directory into that destination.
+4. Preserve the directory structure and supporting `references/` and `scripts/` files inside each skill.
+5. Leave existing project instruction files unchanged.
+6. Restart or reload the agent if it requires that step to discover newly installed skills.
+
+### Manual fallback
+
+If you already know your agent's skills directory, copy the bundle directly:
 
 ```bash
-git clone https://github.com/thienhm/agent-thor.git ~/.agent-thor
+cp -R /path/to/agent-thor/skills/. /path/to/your-agent/skills/
 ```
 
-This only needs to be done once. All projects share the same global clone.
-
-### Step 2: Activate in your project
-
-From your iOS project root directory, symlink the `skills/` directory and the agent config into the project so the AI tool can discover them within its workspace scope.
-
-What to symlink:
-- `~/.agent-thor/skills` → into the project (so skills are discoverable)
-- `~/.agent-thor/agents/agent-thor.md` → into the project's tool-specific config file
-
-**Examples:**
-```bash
-# Symlink skills into project
-ln -sf ~/.agent-thor/skills ./skills
-
-# Symlink agent config (adapt the target filename to your tool's convention)
-ln -sf ~/.agent-thor/agents/agent-thor.md ./CLAUDE.md       # Claude Code
-ln -sf ~/.agent-thor/agents/agent-thor.md ./GEMINI.md       # Antigravity / Gemini CLI
-ln -sf ~/.agent-thor/agents/agent-thor.md ./AGENTS.md       # Codex
-```
-
-### Step 3: Add symlinks to .gitignore
-
-```bash
-echo "skills" >> .gitignore
-echo "CLAUDE.md" >> .gitignore    # if using Claude Code
-echo "GEMINI.md" >> .gitignore    # if using Antigravity
-```
-
-### Step 4: Restart your AI tool
-
-Quit and relaunch your AI coding tool to discover the new skills and agent.
+Use the destination documented by your coding agent. Do not copy the repository's `agents/agent-thor.md` over an existing project instruction file.
 
 ## Verify
 
-```bash
-# Check the global clone
-ls ~/.agent-thor/skills/
+Confirm that the selected destination contains:
 
-# Check project symlinks
-ls -la ./skills
-ls -la ./CLAUDE.md        # or ./GEMINI.md
+```text
+using-agent-thor/SKILL.md
 ```
 
-You should see symlinks pointing back to `~/.agent-thor/`.
+Then ask your coding agent to list or use the `using-agent-thor` skill. If the skill is not discoverable, restart the agent and confirm that the chosen destination is one of its supported skills directories.
+
+## Use
+
+Use `using-agent-thor` as the normal entry point for general iOS and Apple-platform work:
+
+> Use `using-agent-thor` to help me implement this feature.
+
+The meta-skill selects the specialist Agent Thor skills relevant to the task. Individual specialist skills can still be invoked directly.
 
 ## Updating
 
-```bash
-cd ~/.agent-thor && git pull
-```
-
-All projects receive the update instantly through their symlinks.
+Obtain the latest Agent Thor repository contents and repeat the copy operation. Allow overwriting the previously copied Agent Thor skill directories while leaving unrelated skills untouched.
 
 ## Uninstalling
 
-1. **Remove project symlinks** (from each project):
-   ```bash
-   rm -f ./skills ./CLAUDE.md ./GEMINI.md ./.github/copilot-instructions.md
-   ```
-
-2. **Optionally delete the global clone:**
-   ```bash
-   rm -rf ~/.agent-thor
-   ```
+Remove only the Agent Thor skill directories that were copied into the selected skills destination. Do not remove the parent skills directory or unrelated skills.
 
 ## What Gets Installed
 
-```
-~/.agent-thor/                           # Global clone (shared by all projects)
-├── skills/                              # 16 domain-specific iOS skills
-│   ├── using-agent-thor/                # Meta-skill: orchestrates all others
-│   ├── ios-swiftui-pro/                 # SwiftUI patterns & state management
-│   ├── ios-architecture/                # App architecture (TCA, MVVM, Clean)
-│   ├── ios-security-expert/             # Keychain, CryptoKit, biometrics
-│   ├── ios-concurrency-expert/          # async/await, Actors, Sendable
-│   ├── ios-testing-pro/                 # XCTest, Swift Testing
-│   ├── ios-performance-audit/           # Memory, CPU, battery profiling
-│   ├── ios-core-data-expert/            # Core Data models & migrations
-│   ├── ios-swiftdata-pro/               # SwiftData, predicates, CloudKit
-│   ├── ios-api-design/                  # Swift API design & naming
-│   ├── ios-accessibility-pro/           # VoiceOver, Dynamic Type
-│   ├── figma-to-swiftui/                # Design-to-code conversion
-│   ├── ios-writing-for-interfaces/      # UI copy & localization
-│   ├── ios-app-store-changelog/         # Release notes
-│   ├── ios-simulator/                   # Simulator automation
-│   └── ios-senior-mentor/               # Mentorship & code review
-├── agents/
-│   └── agent-thor.md                    # Agent definition
-└── README.md                            # Documentation
-
-your-ios-project/                        # Any iOS project
-├── skills → ~/.agent-thor/skills        # Symlink (gitignored)
-├── CLAUDE.md → ~/.agent-thor/...        # Symlink (gitignored)
-└── ...your project files
+```text
+your-agent-skills-directory/
+├── using-agent-thor/                # General Agent Thor entry point
+├── ios-swiftui-pro/
+├── ios-architecture/
+├── ios-security-expert/
+├── ios-concurrency-expert/
+├── ios-testing-pro/
+├── ios-performance-audit/
+├── ios-core-data-expert/
+├── ios-swiftdata-pro/
+├── ios-api-design/
+├── ios-accessibility-pro/
+├── figma-to-swiftui/
+├── ios-writing-for-interfaces/
+├── ios-app-store-changelog/
+├── ios-simulator/
+└── ios-senior-mentor/
 ```

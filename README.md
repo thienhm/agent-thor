@@ -1,23 +1,26 @@
-# Agent Thor (iOS Expert Framework)
+# Agent Thor
 
-A suite of 16 AI skills that transform your AI coding assistant into an elite Senior iOS Developer (Agent Thor). Works with Claude Code, Antigravity (Gemini CLI), GitHub Copilot, and Codex.
+Agent Thor is a collection of 16 skills that gives AI coding agents focused guidance for iOS and Apple-platform development. It covers SwiftUI, architecture, data, security, concurrency, testing, performance, accessibility, and developer tooling.
 
 ## What It Does
 
-When installed, your AI assistant gains access to a **Panel of Experts** — 16 domain-specific iOS skills covering SwiftUI, architecture, security, concurrency, testing, performance, and more. Instead of relying on generic training data, Agent Thor reads expert-curated skill files to produce architecturally sound, production-quality iOS code.
+The `using-agent-thor` skill is the general entry point. It identifies the specialist skills relevant to a task and coordinates their guidance.
 
-## Quick Install
+## Install
 
-```bash
-# Clone once (globally)
-git clone https://github.com/thienhm/agent-thor.git ~/.agent-thor
-```
+Give this prompt to your coding agent:
 
-Then tell your AI coding tool:
+> Install the Agent Thor skills from https://github.com/thienhm/agent-thor. Copy every directory under `skills/` into the appropriate skills directory for this agent. Use a user-level skills directory unless I ask for a project-only installation. Do not replace or symlink my `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, or other project instruction files. Verify that the `using-agent-thor` skill is discoverable when finished.
 
-> Install Agent Thor from `~/.agent-thor`. Follow the instructions in `INSTALL.md`.
+See [INSTALL.md](INSTALL.md) for the complete copy and verification instructions.
 
-Or see [INSTALL.md](INSTALL.md) for detailed manual setup.
+## Use
+
+For general iOS or Apple-platform work, ask your coding agent to use `using-agent-thor`:
+
+> Use `using-agent-thor` to help me implement this feature.
+
+You can also invoke an individual specialist skill directly when you already know which domain you need.
 
 ## Skills Included
 
@@ -28,14 +31,6 @@ Or see [INSTALL.md](INSTALL.md) for detailed manual setup.
 | **Systems & Safety** | `ios-security-expert`, `ios-concurrency-expert`, `ios-performance-audit` |
 | **DevOps & Tooling** | `ios-testing-pro`, `ios-app-store-changelog`, `ios-simulator`, `ios-senior-mentor` |
 | **Orchestration** | `using-agent-thor` (meta-skill that coordinates all others) |
-
-## How It Works
-
-1. You describe a task (e.g., "Build a secure offline login screen")
-2. The agent identifies which domain experts are needed
-3. It dispatches sub-agents to read each expert's skill file
-4. It synthesizes their constraints into a unified implementation plan
-5. You approve the plan, then the agent executes it
 
 ## License
 
