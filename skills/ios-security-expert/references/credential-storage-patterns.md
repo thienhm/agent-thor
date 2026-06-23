@@ -36,7 +36,7 @@ CISA and the FBI classify hardcoded credentials as a formal "bad security practi
 ```swift
 // ❌ INCORRECT — Hardcoded API key discoverable via `strings` on the Mach-O binary
 struct APIConfig {
-    static let stripeSecretKey = "sk_dummy_51ABC123DEF456..."
+    static let stripeSecretKey = "sk_live_51ABC123DEF456..."
     static let firebaseAPIKey = "AIzaSyB1234567890abcdefg"
 }
 // Attacker runs: strings MyApp.app/MyApp | grep "sk_live"

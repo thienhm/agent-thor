@@ -88,7 +88,7 @@ API keys compiled into Swift appear in the binary's `__TEXT.__cstring` segment â
 
 ```swift
 class PaymentService {
-    private let stripeKey = "sk_dummy_51H7bK2E..."   // In binary
+    private let stripeKey = "sk_live_51H7bK2E..."   // In binary
     private let firebaseKey = "AIzaSyB..."            // In binary
 
     func charge(amount: Int) async throws {
@@ -141,7 +141,7 @@ Apple's DeviceCheck and App Attest frameworks provide server-side device verific
 
 ```bash
 grep -rn 'let.*[Kk]ey.*=.*"[A-Za-z0-9_\-]\{20,\}"' --include="*.swift"
-grep -rn '"sk_dummy_\|"pk_dummy_\|"AIza[A-Za-z0-9]\|"AKIA[A-Z0-9]' \
+grep -rn '"sk_live_\|"pk_live_\|"AIza[A-Za-z0-9]\|"AKIA[A-Z0-9]' \
   --include="*.swift" --include="*.plist" --include="*.xcconfig"
 ```
 
