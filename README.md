@@ -29,7 +29,8 @@ You can also invoke an individual specialist skill directly when you already kno
 | **UI/UX** | `ios-swiftui-pro`, `figma-to-swiftui`, `ios-accessibility-pro`, `ios-writing-for-interfaces` |
 | **Architecture & Data** | `ios-architecture`, `ios-api-design`, `ios-core-data-expert`, `ios-swiftdata-pro` |
 | **Systems & Safety** | `ios-security-expert`, `ios-concurrency-expert`, `ios-performance-audit` |
-| **DevOps & Tooling** | `ios-testing-pro`, `ios-app-store-changelog`, `ios-simulator`, `ios-senior-mentor` |
+| **DevOps & Tooling** | `ios-testing-pro`, `ios-app-store-changelog`, `ios-simulator` |
+| **Cross-Cutting Guidance** | `ios-senior-mentor` |
 | **Orchestration** | `using-agent-thor` (meta-skill that coordinates all others) |
 
 ## License

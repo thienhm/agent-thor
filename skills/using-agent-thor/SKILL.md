@@ -11,7 +11,7 @@ Use this skill whenever a user requests a new feature, a complex bug fix, or an 
 
 ## The iOS Expert Taxonomy
 
-The `agent-thor` bundle contains 14 specialized domain experts. When given a task, your first job is to identify which experts are needed.
+The `agent-thor` bundle contains 14 specialized domain experts, one cross-cutting mentor, and one orchestrator skill. When given a task, your first job is to identify which experts and cross-cutting guidance are needed.
 
 *   **UI/UX Layer:**
     *   `figma-to-swiftui` - Converting designs, colors, fonts, and responsive layouts.
@@ -31,6 +31,8 @@ The `agent-thor` bundle contains 14 specialized domain experts. When given a tas
     *   `ios-testing-pro` - Unit tests, XCTest vs Swift Testing.
     *   `ios-app-store-changelog` - Writing release notes.
     *   `ios-simulator` - Reading the simulator state visually, capturing logs, automating interactions.
+*   **Cross-Cutting Guidance:**
+    *   `ios-senior-mentor` - Constructive coaching, clear technical explanations, and explicit architecture and performance trade-offs across all domains.
 
 ## The "Panel of Experts" Workflow
 

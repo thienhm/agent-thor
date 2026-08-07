@@ -17,6 +17,6 @@ This registry tracks the source repositories for each of the 16 skills included 
 | `ios-core-data-expert` | `AvdLee/Core-Data-Agent-Skill` | `core-data-expert/` | |
 | `ios-app-store-changelog` | `Dimillian/Skills` | `app-store-changelog/` | Monorepo |
 | `ios-performance-audit` | `Dimillian/Skills` | `swiftui-performance-audit/` | Monorepo |
-| `ios-simulator` | `conorluddy/ios-simulator-skill` | `ios-simulator-skill/` | Includes python automation scripts |
+| `ios-simulator` | `conorluddy/ios-simulator-skill` | `ios-simulator-skill/skills/ios-simulator-skill/` | Includes python automation scripts |
 | `figma-to-swiftui` | `daetojemax/figma-to-swiftui-skill` | `.` (flat repo) | |
 | `ios-writing-for-interfaces` | `andrewgleave/skills` | `writing-for-interfaces/` | Monorepo |
