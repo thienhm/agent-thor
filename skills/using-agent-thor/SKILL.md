@@ -1,13 +1,11 @@
 ---
 name: using-agent-thor
-description: The entrypoint and orchestrator meta-skill for the Agent Thor framework. Must be invoked at the start of any new feature implementation, architectural change, or cross-domain bug fix.
+description: Use when an iOS or Apple-platform feature, architectural change, review, or bug fix spans multiple specialist domains, or when the user explicitly requests Agent Thor.
 ---
 
 # Using Agent Thor Skills (Meta-Skill)
 
-> **Philosophy:** Deep expertise lies in knowing *who* to ask, not in knowing everything yourself. This skill transforms the primary agent into a Lead Architect that orchestrates a "Panel of Experts" sub-agent workflow. Rather than guessing at accessibility rules or security constraints, the primary agent dispatches specialized sub-agents to read the domain-specific `SKILL.md` files, report back constraints, and then synthesizes a unified implementation plan.
-
-Use this skill whenever a user requests a new feature, a complex bug fix, or an architectural refactor that touches multiple domains within iOS development.
+Coordinate relevant Apple-platform specialists for work spanning multiple domains. For a focused task, read and follow the relevant specialist directly; for example, release notes use `app-store-changelog` without an expert panel.
 
 ## The iOS Expert Taxonomy
 
@@ -15,72 +13,80 @@ The `agent-thor` bundle contains 14 specialized domain experts, one cross-cuttin
 
 *   **UI/UX Layer:**
     *   `figma-to-swiftui` - Converting designs, colors, fonts, and responsive layouts.
-    *   `ios-swiftui-pro` - Proper SwiftUI state management, view structures, rendering efficiency.
-    *   `ios-writing-for-interfaces` - UI copy, localization strings, button text best practices.
-    *   `ios-accessibility-pro` - VoiceOver, Dynamic Type, Contrast, and Accessibility Traits.
+    *   `swiftui-pro` - Proper SwiftUI state management, view structures, rendering efficiency.
+    *   `writing-for-interfaces` - UI copy, localization strings, button text best practices.
+    *   `ios-accessibility` - VoiceOver, Dynamic Type, Contrast, and Accessibility Traits.
 *   **Architecture & Data Layer:**
-    *   `ios-architecture` - App navigation, module structure, and logical separation (Clean, TCA, MVVM).
-    *   `ios-api-design` - Structuring Swift APIs, naming conventions, module interfaces.
-    *   `ios-core-data-expert` - Core Data models, threading, migrations, context saving.
-    *   `ios-swiftdata-pro` - Modern SwiftData queries, predicates, CloudKit sync.
+    *   `swift-architecture-skill` - App navigation, module structure, and logical separation (Clean, TCA, MVVM).
+    *   `swift-api-design-guidelines-skill` - Structuring Swift APIs, naming conventions, module interfaces.
+    *   `core-data-expert` - Core Data models, threading, migrations, context saving.
+    *   `swiftdata-pro` - Modern SwiftData queries, predicates, CloudKit sync.
 *   **Systems & Safety Layer:**
-    *   `ios-security-expert` - Keychain, CryptoKit, secure storage, biometrics.
-    *   `ios-concurrency-expert` - Actors, async/await, Sendable, avoiding retain cycles in tasks.
-    *   `ios-performance-audit` - Diagnosing hangs, memory leaks, battery drain.
+    *   `swift-security-expert` - Keychain, CryptoKit, secure storage, biometrics.
+    *   `swift-concurrency-pro` - Actors, async/await, Sendable, avoiding retain cycles in tasks.
+    *   `swiftui-performance-audit` - Diagnosing hangs, memory leaks, battery drain.
 *   **DevOps & Tooling Layer:**
-    *   `ios-testing-pro` - Unit tests, XCTest vs Swift Testing.
-    *   `ios-app-store-changelog` - Writing release notes.
-    *   `ios-simulator` - Reading the simulator state visually, capturing logs, automating interactions.
+    *   `swift-testing-pro` - Unit tests, XCTest vs Swift Testing.
+    *   `app-store-changelog` - Writing release notes.
+    *   `ios-simulator-skill` - Reading the simulator state visually, capturing logs, automating interactions.
 *   **Cross-Cutting Guidance:**
     *   `ios-senior-mentor` - Constructive coaching, clear technical explanations, and explicit architecture and performance trade-offs across all domains.
 
-## The "Panel of Experts" Workflow
+## Skill Names and Manual Copy Paths
 
-Do **not** try to remember the rules of the domains above from your baseline training data. You must follow this strict 3-step delegation protocol:
+The taxonomy uses the frontmatter names selected by `npx skills --skill` and exposed in skill catalogs. CLI installations use these names for installed directories. Manual copies retain the source directory names below. Match the catalog by published name first; use the source directory only as a filesystem fallback.
 
-### Step 1: Identify
-Analyze the user's request. Select exactly which domains apply. For example, a request to "Build a secure offline login screen" requires `ios-swiftui-pro`, `ios-security-expert`, `ios-architecture`, and `ios-accessibility-pro`.
+| Published skill name | Source directory under `skills/` |
+|---|---|
+| `figma-to-swiftui` | `figma-to-swiftui` |
+| `ios-accessibility` | `ios-accessibility-pro` |
+| `swift-api-design-guidelines-skill` | `ios-api-design` |
+| `app-store-changelog` | `ios-app-store-changelog` |
+| `swift-architecture-skill` | `ios-architecture` |
+| `swift-concurrency-pro` | `ios-concurrency-expert` |
+| `core-data-expert` | `ios-core-data-expert` |
+| `swiftui-performance-audit` | `ios-performance-audit` |
+| `swift-security-expert` | `ios-security-expert` |
+| `ios-senior-mentor` | `ios-senior-mentor` |
+| `ios-simulator-skill` | `ios-simulator` |
+| `swiftdata-pro` | `ios-swiftdata-pro` |
+| `swiftui-pro` | `ios-swiftui-pro` |
+| `swift-testing-pro` | `ios-testing-pro` |
+| `writing-for-interfaces` | `ios-writing-for-interfaces` |
 
-### Step 2: Dispatch Sub-Agents
-For **each** identified domain, spawn a parallel sub-agent. You must provide each sub-agent with the original task description and the following strict prompt:
+## Resolve the Required Experts
 
-> **Sub-Agent Prompt Template:**
-> "You are the Lead Expert in `[Domain Name]`. Your strict job is to act as a consultant for a new feature. 
-> 1. Read the `skills/[domain]/SKILL.md` file and any referenced documentation.
-> 2. Analyze the following task: `[Insert User Task]`.
-> 3. Return a concise markdown report detailing exactly which constraints, code patterns, and anti-patterns must be followed for this task according to your domain's documentation. Do not write the final code, only provide the architectural constraints and examples."
+1. Select only the experts needed for the task using the taxonomy above.
+2. Resolve each selected skill by name from the agent's available-skills catalog or skill discovery tool. Read its `SKILL.md` at the location supplied by that catalog. Use the provider's reader for non-filesystem skills.
+3. For a filesystem installation without a catalog entry, inspect sibling `<published-name>/SKILL.md` and then `<source-directory>/SKILL.md` from the table above beside this skill's installed directory. Read the frontmatter to confirm the skill identity. Resolve the actual directory first if this skill is a symlink. The source checkout's `skills/` layout is not a path relative to the user's project. Never assume a fixed home directory or agent-specific installation directory.
+4. Resolve each expert's references and scripts relative to that expert's own directory, preserving any access method supplied by its provider.
 
-*(Wait for all dispatched sub-agents to return their reports before proceeding).*
+If a required expert cannot be found, report its name and offer a targeted installation command, for example:
 
-### Step 3: Unify and Plan
-Once all experts have reported back, you (the Lead Architect) must synthesize their findings. Look for conflicting constraints (e.g., Performance vs Accessibility) and resolve them logically.
-
-## Output Format: The Unified Execution Plan
-
-You must now present the comprehensive plan to the user for approval. Do not write the source code yet. Output a highly structured markdown plan exactly matching this format:
-
-```markdown
-# Implementation Plan: [Task Name]
-
-## 1. Domain Constraints Synthesized
-*Summarize the specific rules returned by your sub-agents.*
-*   **Security:** (e.g., Must use Keychain with `AfterFirstUnlock`, no `@AppStorage` for tokens).
-*   **SwiftUI:** (e.g., Must use isolated `@Observable` stores, no `@State` for network logic).
-*   **Accessibility:** (e.g., Must define explicit `accessibilityLabel` for the custom toggle).
-
-## 2. File Modification Strategy
-*List every file that needs to be created or modified, grouped by component.*
-
-### `[Component/Layer Name]`
-#### `[NEW]` `path/to/new/File.swift`
-- Describe what this file does.
-- Describe which domain constraints apply here (e.g., "Applies the Security rules for keychain").
-
-#### `[MODIFY]` `path/to/existing/File.swift`
-- Describe the exact modifications.
-
-## 3. Open Questions (If Any)
-*List any design ambiguities or conflicts you could not resolve that require the user's input.*
+```bash
+npx skills add thienhm/agent-thor --skill swift-architecture-skill ios-accessibility
 ```
 
-**CRITICAL RULE:** Once you present this plan to the user, you must **STOP** and wait for their explicit approval. Once approved, use the normal coding tools to execute the plan strictly following the synthesized constraints.
+Use the actual missing names; add `-g` if the user wants a global installation or `-a <agent>` to target a particular agent. Selecting `using-agent-thor` alone does not install the specialists. Follow the session's existing authorization for installations; otherwise offer the command without running it. Continue independent work with available experts. If the missing guidance is needed to make a decision, ask whether to install it or proceed with the available guidance. State any resulting coverage gaps; never claim an absent expert was consulted.
+
+## Choose the Workflow
+
+### Focused work
+
+Read the selected specialist and follow its instructions directly. Complete the requested explanation, review, artifact, or authorized change. An expert panel and unified implementation plan are unnecessary for a single-domain task.
+
+### Work spanning multiple domains
+
+Read the selected expert instructions and gather the constraints relevant to the task. Delegate independent consultations in parallel when subagents are available and permitted by the session. Give each consultant the task, the resolved skill location and access method, and this assignment:
+
+> Read the selected expert skill and relevant supporting files. Return the constraints, recommended patterns, and pitfalls that affect this task, with concrete examples where useful. Act as a consultant; do not modify files.
+
+When delegation is unavailable or disallowed, read the selected skills yourself and synthesize their guidance. Do not dispatch an agent merely to satisfy a fixed panel size. Wait for any delegated consultations before using their findings.
+
+Resolve conflicts between expert recommendations using the project's architecture and the user's requirements. Scale the result to the request:
+
+- **Explanation or review:** Deliver the answer or findings directly, identifying evidence and any coverage gaps.
+- **Small, authorized change:** Briefly state the approach, implement it, and verify the affected behavior.
+- **Substantial implementation:** Present a unified plan covering relevant domain constraints, files to change, validation, and unresolved decisions. If the user has already approved a plan covering this work, execute it. Otherwise obtain approval before implementation.
+
+Respect existing user authorization and project approval requirements. Do not add another approval gate for work already approved.

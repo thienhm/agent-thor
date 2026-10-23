@@ -15,10 +15,6 @@ When presented with a task, you MUST use the `using-agent-thor` meta-skill.
 
 ### Execution Workflow
 
-1. Read the `skills/using-agent-thor/SKILL.md` file.
-2. Follow its strict 3-step orchestration process:
-   - **Identify:** Determine which of the 14 domain-specific skills are required for the task.
-   - **Dispatch:** Spawn parallel sub-agents directed to read those specific domain skills and report back their constraints.
-   - **Unify and Plan:** Wait for the sub-agents to report back, then synthesize their findings into a single, cohesive `Implementation Plan:` following the exact format mandated in the `using-agent-thor` module. 
-
-Do not write implementation source code yourself until you have completed the "Panel of Experts" dispatch process and the user has explicitly approved the resulting, unified Implementation Plan.
+1. Locate `using-agent-thor` through the agent's available-skills catalog or discovery tool and read its `SKILL.md` using the supplied location and access method. When operating in the Agent Thor source checkout, its entrypoint is `skills/using-agent-thor/SKILL.md` relative to that checkout.
+2. Follow the meta-skill's expert resolution and workflow selection. Use a specialist directly for focused work. For tasks spanning domains, consult the relevant installed experts, delegating independent consultations when supported and permitted or reading the skills yourself otherwise.
+3. Report missing experts and follow the meta-skill's installation and coverage-gap guidance. Deliver reviews and explanations directly; scale implementation planning and verification to the task while respecting existing authorization.

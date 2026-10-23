@@ -1,15 +1,41 @@
 # Installing Agent Thor
 
-Agent Thor is installed by copying its skill directories into a skills directory supported by your coding agent. Let the agent choose the correct destination for its own conventions.
+Agent Thor contains 16 independently installable skills. Use the skills CLI to choose skills and target agents, or copy the skill directories manually.
 
 ## Prerequisites
 
-- Git
+- Node.js 22.20 or later for `npx skills`
+- Git for repository installation
 - An AI coding agent that supports Agent Skills
 
 ## Installation
 
-### Recommended: ask your agent
+### Recommended: npx skills
+
+```bash
+# Preview the available skills without installing
+npx skills add thienhm/agent-thor --list
+
+# Choose skills and target agents interactively
+npx skills add thienhm/agent-thor
+
+# Install one specialist
+npx skills add thienhm/agent-thor --skill swift-concurrency-pro
+
+# Install the complete collection for Codex
+npx skills add thienhm/agent-thor --skill '*' -a codex
+
+# Install the complete collection globally for Claude Code
+npx skills add thienhm/agent-thor --skill '*' -a claude-code -g
+```
+
+Installation is project-level by default. Add `-g` for user-level availability across projects, `-y` to skip CLI confirmations, or `--copy` to use copies instead of symlinks. Quote `'*'` so the shell does not expand it.
+
+`using-agent-thor` coordinates separately installed specialists; the CLI does not automatically install those specialists when you select the orchestrator alone. Install the complete collection for general orchestration, or install only the specialists you need for focused work. If an expert is missing, the orchestrator reports it and provides a targeted install command.
+
+See the [skills CLI reference](https://github.com/vercel-labs/skills/blob/main/docs/commands.md) for agent identifiers and options. The CLI manages skill directories; the optional `agents/agent-thor.md` definition is not installed by these commands.
+
+### Alternative: ask your agent to copy the collection
 
 Give this prompt to the coding agent where you want to use Agent Thor:
 
@@ -36,7 +62,14 @@ Use the destination documented by your coding agent. Do not copy the repository'
 
 ## Verify
 
-Confirm that the selected destination contains:
+For a CLI installation, list the installed skills in the matching scope:
+
+```bash
+npx skills list
+npx skills list -g
+```
+
+Confirm that each selected skill includes its `SKILL.md` and supporting files. For a full installation, confirm all 16 skills listed below are present, including:
 
 ```text
 using-agent-thor/SKILL.md
@@ -46,24 +79,41 @@ Then ask your coding agent to list or use the `using-agent-thor` skill. If the s
 
 ## Use
 
-Use `using-agent-thor` as the normal entry point for general iOS and Apple-platform work:
+Use `using-agent-thor` for iOS and Apple-platform work spanning multiple domains:
 
 > Use `using-agent-thor` to help me implement this feature.
 
-The meta-skill selects the specialist Agent Thor skills relevant to the task. Individual specialist skills can still be invoked directly.
+The meta-skill selects the relevant installed specialists. Invoke individual specialists directly for focused work; for example, use `app-store-changelog` for release notes. Only relevant skill instructions and references need to be loaded.
 
 ## Updating
 
-Obtain the latest Agent Thor repository contents and repeat the copy operation. Allow overwriting the previously copied Agent Thor skill directories while leaving unrelated skills untouched.
+For CLI installations:
+
+```bash
+npx skills check
+npx skills update swift-concurrency-pro
+```
+
+Use `npx skills update` to update all CLI-managed skills; this can include skills from other repositories. For manual installations, obtain the latest Agent Thor repository contents and repeat the copy operation, leaving unrelated skills untouched.
 
 ## Uninstalling
 
-Remove only the Agent Thor skill directories that were copied into the selected skills destination. Do not remove the parent skills directory or unrelated skills.
+For CLI installations, select installed Agent Thor skills to remove:
+
+```bash
+npx skills remove
+# For a global installation
+npx skills remove -g
+```
+
+For manual installations, remove only the Agent Thor skill directories that were copied into the selected destination. Do not remove the parent skills directory or unrelated skills.
 
 ## What Gets Installed
 
+For manual copies, directory names match the source layout below. The CLI names installed directories after each skill's frontmatter `name`, which can differ (for example, `swift-concurrency-pro` rather than `ios-concurrency-expert`). Use `npx skills add thienhm/agent-thor --list` to see selectable names.
+
 ```text
-your-agent-skills-directory/
+your-agent-skills-directory/          # Full collection; partial installs contain only selected skills
 ├── using-agent-thor/                # General Agent Thor entry point
 ├── ios-swiftui-pro/
 ├── ios-architecture/

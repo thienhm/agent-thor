@@ -4,15 +4,26 @@ Agent Thor is a collection of 16 skills that gives AI coding agents focused guid
 
 ## What It Does
 
-The `using-agent-thor` skill is the general entry point. It identifies the specialist skills relevant to a task and coordinates their guidance.
+Use `using-agent-thor` for features and reviews that span multiple domains. Invoke an individual specialist directly for focused tasks such as release notes or a concurrency review. All 16 skills are independently selectable.
 
 ## Install
 
-Give this prompt to your coding agent:
+Install with [Vercel's skills CLI](https://github.com/vercel-labs/skills) (Node.js 22.20 or later):
 
-> Install the Agent Thor skills from https://github.com/thienhm/agent-thor. Copy every directory under `skills/` into the appropriate skills directory for this agent. Use a user-level skills directory unless I ask for a project-only installation. Do not replace or symlink my `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, or other project instruction files. Verify that the `using-agent-thor` skill is discoverable when finished.
+```bash
+# Choose skills and agents interactively (project installation)
+npx skills add thienhm/agent-thor
 
-See [INSTALL.md](INSTALL.md) for the complete copy and verification instructions.
+# Install one specialist
+npx skills add thienhm/agent-thor --skill swift-concurrency-pro
+
+# Install the full collection for Codex
+npx skills add thienhm/agent-thor --skill '*' -a codex
+```
+
+Add `-g` for a user-level installation. Installing only `using-agent-thor` does not install its specialists; install the full collection for the complete orchestration workflow.
+
+See [INSTALL.md](INSTALL.md) for verification, updates, and manual installation.
 
 ## Use
 
@@ -26,10 +37,10 @@ You can also invoke an individual specialist skill directly when you already kno
 
 | Layer | Skills |
 |-------|--------|
-| **UI/UX** | `ios-swiftui-pro`, `figma-to-swiftui`, `ios-accessibility-pro`, `ios-writing-for-interfaces` |
-| **Architecture & Data** | `ios-architecture`, `ios-api-design`, `ios-core-data-expert`, `ios-swiftdata-pro` |
-| **Systems & Safety** | `ios-security-expert`, `ios-concurrency-expert`, `ios-performance-audit` |
-| **DevOps & Tooling** | `ios-testing-pro`, `ios-app-store-changelog`, `ios-simulator` |
+| **UI/UX** | `swiftui-pro`, `figma-to-swiftui`, `ios-accessibility`, `writing-for-interfaces` |
+| **Architecture & Data** | `swift-architecture-skill`, `swift-api-design-guidelines-skill`, `core-data-expert`, `swiftdata-pro` |
+| **Systems & Safety** | `swift-security-expert`, `swift-concurrency-pro`, `swiftui-performance-audit` |
+| **DevOps & Tooling** | `swift-testing-pro`, `app-store-changelog`, `ios-simulator-skill` |
 | **Cross-Cutting Guidance** | `ios-senior-mentor` |
 | **Orchestration** | `using-agent-thor` (meta-skill that coordinates all others) |
 
